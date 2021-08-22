@@ -1,1 +1,16 @@
-# microservices_usage
+# マイクロサービス学習用プロジェクト
+
+## 目的
+
+* 概念や思想をちゃんと理解する
+* 不向きな部分、デメリットも抑える
+* Spring Framework、AWSの構築方法を習得する
+
+## マイクロサービスとは
+
+
+## 構築
+
+### Spring Framework
+
+### AWS
