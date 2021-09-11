@@ -68,8 +68,18 @@
 
 ## 構築
 
+### Sock Shop
+
+* マイクロサービスのでもサイト
+* https://microservices-demo.github.io/
+    * [Github](https://github.com/microservices-demo)
+* Java、Go、Python、C#などいろんな言語のマイクロサービスがある
+* `docker-compose`すると各自環境で起動できる
+
 ### Spring Framework
 
 ### AWS
 
 ## 参考
+
+* https://www.oreilly.co.jp/books/9784873119311/
