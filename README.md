@@ -70,7 +70,7 @@
 
 ### Sock Shop
 
-* マイクロサービスのでもサイト
+* マイクロサービスのデモサイト
 * https://microservices-demo.github.io/
     * [Github](https://github.com/microservices-demo)
 * Java、Go、Python、C#などいろんな言語のマイクロサービスがある
