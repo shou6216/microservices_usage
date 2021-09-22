@@ -88,40 +88,20 @@
 
 * https://docs.aws.amazon.com/app-mesh/latest/userguide/getting-started-ecs.html
 
-##### シナリオ
+##### 実行環境
 
 * `serviceA`と`serviceB`の2つのサービスがある
+* 2つのサービスは`apps.local`の名前空間に存在する
+* `serviceA`はHTTPプロトコルで`serviceB`と通信する
+* `serviceB`はversion1とし、version2の`serviceB`を`serviceBv2`としてデプロイ済
+ * 要は`serviceA`と`serviceB`と`serviceBv2`の3サービス存在する
 
+##### やること
 
-Scenario
-To illustrate how to use App Mesh, assume that you have an application with the following characteristics:
-
-Consists of two services named serviceA and serviceB.
-
-Both services are registered to a namespace named apps.local.
-
-ServiceA communicates with serviceB over HTTP/2, port 80.
-
-You have already deployed version 2 of serviceB and registered it with the name serviceBv2 in the apps.local namespace.
-
-You have the following requirements:
-
-You want to send 75 percent of the traffic from serviceA to serviceB and 25 percent of the traffic to serviceBv2 to validate that serviceBv2 is bug free before you send 100 percent of the traffic from serviceA to it.
-
-You want to be able to easily adjust the traffic weighting so that 100 percent of the traffic goes to serviceBv2 once it is proven to be reliable. Once all traffic is being sent to serviceBv2, you want to discontinue serviceB.
-
-You do not want to have to change any existing application code or service discovery registration for your actual services to meet the previous requirements.
-
-To meet your requirements, you have decided to create an App Mesh service mesh with virtual services, virtual nodes, a virtual router, and a route. After implementing your mesh, you update your services to use the Envoy proxy. Once updated, your services communicate with each other through the Envoy proxy rather than directly with each other.
-
-Prerequisites
-An existing understanding of App Mesh concepts. For more information, see What Is AWS App Mesh?.
-
-An existing understanding of Amazon ECSs concepts. For more information, see What is Amazon ECS in the Amazon Elastic Container Service Developer Guide.
-
-App Mesh supports Linux services that are registered with DNS, AWS Cloud Map, or both. To use this getting started guide, we recommend that you have three existing services that are registered with DNS. The procedures in this topic assume that the existing services are named serviceA, serviceB, and serviceBv2 and that all services are discoverable through a namespace named apps.local.
-
-You can create a service mesh and its resources even if the services don't exist, but you cannot use the mesh until you have deployed actual services. For more information about service discovery on Amazon ECS, see Service Discovery. To create an Amazon ECS service with service discovery, see Tutorial: Creating a Service Using Service Discovery. If you don't already have services running, you can Create an Amazon ECS service with service discovery.
+* `serviceA`→`serviceB`の通信を、`App Mesh`を利用して`serviceA`→`serviceBv2`に切り替える
+* 具体的には
+    * `serviceA`→`serviceB`の通信量と`serviceA`→`serviceBv2`の通信量を`3:1`の状態で`serviceBv2`の動作を確認
+    * `serviceBv2`の動作確認ができたところ、`App Mesh`の通信量重み付けの設定で全ての通信を`serviceBv2`に向ける
 
 Step 1: Create a mesh and virtual service
 A service mesh is a logical boundary for network traffic between the services that reside within it. For more information, see Service Meshes. A virtual service is an abstraction of an actual service. For more information, see Virtual services.
