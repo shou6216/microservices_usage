@@ -104,6 +104,11 @@
     * `serviceBv2`の動作確認ができたところ、`App Mesh`の通信量重み付けの設定で全ての通信を`serviceBv2`に向ける
     * **アプリをいじらなくても、App Meshの設定だけでサービス間の通信を制御できることを確認する**
 
+##### 事前準備
+
+* ECSサービス作る
+* https://docs.aws.amazon.com/AmazonECS/latest/developerguide/create-service-discovery.html
+
 Step 1: Create a mesh and virtual service
 A service mesh is a logical boundary for network traffic between the services that reside within it. For more information, see Service Meshes. A virtual service is an abstraction of an actual service. For more information, see Virtual services.
 
