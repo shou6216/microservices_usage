@@ -81,11 +81,18 @@
 * [AWS App Mesh](https://aws.amazon.com/jp/app-mesh/)
 * マイクロサービスで必要なサービス間の通信を管理するためのサービス
    * 大規模なマイクロサービスだと必須
-* 自力で1から構築するのは無理なので、AWSワークショップ及びサンプルを元に構築
-   * 以下、　**構築するためにはAWSアカウントおよび環境が必要**
-   * **実行環境を直接見てもらおうと思ったけど、稼働し続けてたら料金発生してしまったので止めます**
- 
+* 以下 **構築するためにはAWSアカウントおよび環境が必要**
 * https://www.youtube.com/watch?v=Nmgl2LhezTc
+
+#### AWSコンソール
+
+* https://docs.aws.amazon.com/app-mesh/latest/userguide/getting-started-ecs.html
+
+#### CLI + CloudFormation
+
+* AWSワークショップ及びサンプルを元に構築
+   * **実行環境を直接見てもらおうと思ったけど、稼働し続けてたら料金発生してしまったので止めます**
+
 * https://github.com/harunobukameda/AWS-App-Mesh-AWS-Cloud-Map
 * https://github.com/aws/aws-app-mesh-examples/tree/master/examples
 
