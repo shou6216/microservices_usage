@@ -143,6 +143,8 @@
 * 仮想サービス`servicea.apps.local`作成
     * 仮想ノード`serviceA`
 
+##### ECS各タスクにApp Meshを有効化する
+
 #### CLI + CloudFormationで構築
 
 * AWSワークショップ及びサンプルを元に構築
