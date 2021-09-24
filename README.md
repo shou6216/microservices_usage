@@ -87,65 +87,19 @@
 #### AWSコンソールで構築
 
 * https://docs.aws.amazon.com/app-mesh/latest/userguide/getting-started-ecs.html
+* https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/getting-started-fargate.html
 
-##### 実行環境
+##### ざっくりやること
 
-* `serviceA`と`serviceB`の2つのサービスがある
-* 2つのサービスは`apps.local`の名前空間に存在する
-* `serviceA`はHTTPプロトコルで`serviceB`と通信する
-* `serviceB`はversion1とし、version2の`serviceB`を`serviceBv2`としてデプロイ済
- * 要は`serviceA`と`serviceB`と`serviceBv2`の3サービス存在する
-
-##### やること
-
-* `serviceA`→`serviceB`の通信を、`App Mesh`を利用して`serviceA`→`serviceBv2`に切り替える
-* 具体的には
-    * `serviceA`→`serviceB`の通信量と`serviceA`→`serviceBv2`の通信量を`3:1`の状態で`serviceBv2`の動作を確認
-    * `serviceBv2`の動作確認ができたところ、`App Mesh`の通信量重み付けの設定で全ての通信を`serviceBv2`に向ける
-    * **アプリをいじらなくても、App Meshの設定だけでサービス間の通信を制御できることを確認する**
-
-##### Meshと仮想サービス作成
-
-* Mesh名`apps`
-* 仮想サービス名`serviceb.apps.local`(`servicea.apps.local`はあとで)
-* あとはデフォルト通り
-
-##### 仮想ノード作成
-
-* 仮想ノード名`serviceB`
-* サービス検出方法`DNS`
-* DNSホスト名`serviceb.apps.local`
-* **リスナー設定** プロトコルは`http2`でポート`80`
-
-##### 仮想ルーター作成
-
-* 仮想ルーター名`serviceB`
-* **リスナー設定** プロトコルは`http2`でポート`80`
-* ルート名`serviceB`
-* ルート設定は`http2`
-* ターゲットの仮想ノードを`serviceB`重みは`100`
-* プレフィックスの一致`/`
-
-##### リソース追加
-
-* `apps`Mesh選択
-* 仮想ノード`serviceBv2`追加
-    * 仮想ノード名`serviceBv2`
-    * サービス検出方法`DNS`
-    * DNSホスト名`servicebv2.apps.local`
-    * **リスナー設定** プロトコルは`http2`でポート`80`
-* 仮想ノード`serviceA`追加
-    * 仮想ノード名`serviceA`
-    * サービス検出方法`DNS`
-    * DNSホスト名`servicea.apps.local`
-    * **リスナー設定** プロトコルは`http2`でポート`80`
-*  仮想ルーター`serviceB`のターゲットを`serviceB`を`75'、`serviceBv2`を`25`にする
-* 仮想サービス`servicea.apps.local`作成
-    * 仮想ノード`serviceA`
-
-##### ECS各タスクにApp Meshを有効化する
-
-* タスク定義内に**App Mesh有効化** のチェックボックスがあるのでチェック入れて仮想ノードとマッピングさせると適用
+1. 事前にECSなど実行コンテナを通常通り構築（EC2でもおｋ）
+2. App Meshでマイクロサービス全体を **Mesh** とした環境を構築
+3. Mesh内に、仮想サービス、仮想ノード、仮想ルーターを用意
+    * 何れも仮想ってついてる通り、まぁインターフェースみたいなもの
+        * 仮想ノードは、事前に作ったECSのタスクやECSなどを紐づけるインターフェース
+        * 仮想ルーターは、仮想ノードを切り替える際に利用するもの
+        * 仮想サービスは、仮想ノードや仮想ルーターをまとめたサービス全体をまとめたもの
+4. 1.で作ったコンテナ側でApp Meshを有効化する
+    * ECSだとTask定義内で、App Mesh有効化のチェックボックスを入れる
 
 #### CLI + CloudFormationで構築
 
