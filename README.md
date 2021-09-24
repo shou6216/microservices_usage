@@ -106,46 +106,19 @@
 
 ##### Meshと仮想サービス作成
 
+* Mesh名`apps`
+* 仮想サービス名`serviceb.apps.local`(`servicea.apps.local`はあとで)
+* あとはデフォルト通り
 
-Step 2: Create a virtual node
-A virtual node acts as a logical pointer to an actual service. For more information, see Virtual nodes.
+##### 仮想ノード作成
 
-Create a virtual node named serviceB, since one of the virtual nodes represents the actual service named serviceB. The actual service that the virtual node represents is discoverable through DNS with a hostname of serviceb.apps.local. Alternately, you can discover actual services using AWS Cloud Map. The virtual node will listen for traffic using the HTTP/2 protocol on port 80. Other protocols are also supported, as are health checks. You will create virtual nodes for serviceA and serviceBv2 in a later step.
+* 仮想ノード名`serviceB`
+* サービス検出方法`DNS`
+* DNSホスト名`serviceb.apps.local`
+* **リスナー設定** プロトコルは`http2`でポート`80`
 
-AWS Management Console
-AWS CLI
-For Virtual node name, enter serviceB.
+##### 仮想ルーター作成
 
-For Service discovery method, choose DNS and enter serviceb.apps.local for DNS hostname.
-
-Under Listener configuration, choose http2 for Protocol and enter 80 for Port.
-
-To continue, choose Next.
-
-Step 3: Create a virtual router and route
-Virtual routers route traffic for one or more virtual services within your mesh. For more information, see Virtual routers and Routes.
-
-Create the following resources:
-
-A virtual router named serviceB, since the serviceB.apps.local virtual service does not initiate outbound communication with any other service. Remember that the virtual service that you created previously is an abstraction of your actual serviceb.apps.local service. The virtual service sends traffic to the virtual router. The virtual router will listen for traffic using the HTTP/2 protocol on port 80. Other protocols are also supported.
-
-A route named serviceB. It will route 100 percent of its traffic to the serviceB virtual node. You will change the weight in a later step once you have added the serviceBv2 virtual node. Though not covered in this guide, you can add additional filter criteria for the route and add a retry policy to cause the Envoy proxy to make multiple attempts to send traffic to a virtual node when it experiences a communication problem.
-
-AWS Management Console
-AWS CLI
-For Virtual router name, enter serviceB.
-
-Under Listener configuration, choose http2 for Protocol and specify 80 for Port.
-
-For Route name, enter serviceB.
-
-For Route type, choose http2.
-
-For Virtual node name under Target configuration, select serviceB and enter 100 for Weight.
-
-Under Match configuration, choose a Method.
-
-To continue, choose Next.
 
 Step 4: Review and create
 Review the settings against the previous instructions.
